@@ -1,0 +1,7 @@
+#!/usr/bin/env scala
+
+def charAllowed(c: Char): Boolean = c.isLetterOrDigit || "-_.".contains(c) 
+val stringToWords: String => Seq[String] = _.map(Option(_).filter(charAllowed) getOrElse ' ').split(" ")
+val wordsToNicks: Seq[String] => Seq[String] = _.collect { case s"$nick.substack.com" => nick }
+
+io.Source.stdin.getLines.flatMap(stringToWords andThen wordsToNicks)/* .distinct */.foreach(println)
